@@ -1,11 +1,14 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {PokemonService} from "./core/services/pokemon.service";
+import {HeaderComponent} from "./core/components/header/header.component";
+import {FooterComponent} from "./core/components/footer/footer.component";
+import {MatToolbar} from "@angular/material/toolbar";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, MatToolbar],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
