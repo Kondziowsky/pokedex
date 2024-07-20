@@ -1,0 +1,17 @@
+.pokemon-card {
+  margin: 12px 0;
+  width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    -webkit-box-shadow: 0 0 10px 2px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0 0 10px 2px rgba(66, 68, 90, 1);
+    box-shadow: 0 0 10px 2px rgba(66, 68, 90, 1);
+    transition: box-shadow 0.2s ease-in-out;
+  }
+
+  .mat-mdc-card-content {
+    align-self: center;
+  }
+}
+

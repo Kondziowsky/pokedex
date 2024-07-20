@@ -4,6 +4,7 @@ import {Card, CardResponse} from "@shared/models/pokemon.model";
 import {map, Observable} from "rxjs";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {PokemonCardComponent} from "@shared/components/pokemon-card/pokemon-card.component";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-pokemon-list',
@@ -12,7 +13,8 @@ import {PokemonCardComponent} from "@shared/components/pokemon-card/pokemon-card
     AsyncPipe,
     NgForOf,
     NgIf,
-    PokemonCardComponent
+    PokemonCardComponent,
+    MatPaginator
   ],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss'
@@ -38,5 +40,11 @@ export class PokemonListComponent implements OnInit {
         return response.data
       })
     );
+  }
+
+  onPageChange(event: any): void {
+    this.page = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.loadCards();
   }
 }

@@ -1,5 +1,14 @@
-<div *ngIf="cards$ | async as cards">
-  <div *ngFor="let card of cards">
-    <pre>{{ card | json }}</pre>
+<div class="list-container">
+  <div class="list-container__content" *ngIf="cards$ | async as cards">
+    <div *ngFor="let card of cards">
+      <app-pokemon-card [card]="card" />
+    </div>
   </div>
+  <mat-paginator
+    class="list-container__paginator"
+    [length]="totalCount"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
 </div>
