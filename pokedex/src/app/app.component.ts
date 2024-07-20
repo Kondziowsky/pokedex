@@ -1,6 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {PokemonService} from "@core/services/pokemon.service";
 import {HeaderComponent} from "@core/components/header/header.component";
 import {FooterComponent} from "@core/components/footer/footer.component";
 import {MatToolbar} from "@angular/material/toolbar";
@@ -12,13 +11,6 @@ import {MatToolbar} from "@angular/material/toolbar";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'pokedex';
-  pokemonService = inject(PokemonService);
-
-  ngOnInit(): void {
-    this.pokemonService.getAllCards().subscribe( (cards) => {
-      console.log('cards: ', cards);
-    })
-  }
 }

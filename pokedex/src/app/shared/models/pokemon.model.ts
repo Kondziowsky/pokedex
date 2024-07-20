@@ -1,3 +1,11 @@
+export interface CardResponse {
+  count: number;
+  data: Card[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+}
+
 export interface Card {
   id: string;
   name: string;

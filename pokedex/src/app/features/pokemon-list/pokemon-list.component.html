@@ -1,1 +1,5 @@
-<p>pokemon-list works!</p>
+<div *ngIf="cards$ | async as cards">
+  <div *ngFor="let card of cards">
+    <pre>{{ card | json }}</pre>
+  </div>
+</div>
