@@ -2,7 +2,8 @@ import {Component, inject, OnInit} from '@angular/core';
 import {PokemonService} from "@core/services/pokemon.service";
 import {Card, CardResponse} from "@shared/models/pokemon.model";
 import {map, Observable} from "rxjs";
-import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {PokemonCardComponent} from "@shared/components/pokemon-card/pokemon-card.component";
 
 @Component({
   selector: 'app-pokemon-list',
@@ -11,13 +12,14 @@ import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
     AsyncPipe,
     NgForOf,
     NgIf,
-    JsonPipe
+    PokemonCardComponent
   ],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss'
 })
 export class PokemonListComponent implements OnInit {
-  private pokemonService = inject(PokemonService);
+  private _pokemonService = inject(PokemonService);
+
   cards$!: Observable<Card[]>;
   page: number = 1;
   pageSize: number = 20;
@@ -28,14 +30,13 @@ export class PokemonListComponent implements OnInit {
   }
 
   private loadCards(): void {
-      const response$ = this.pokemonService.getAllCards(this.page, this.pageSize);
-
-    response$.subscribe((response: CardResponse) => {
-      this.totalCount = response.totalCount;
-    });
+    const response$ = this._pokemonService.getAllCards(this.page, this.pageSize);
 
     this.cards$ = response$.pipe(
-      map((response: CardResponse) => response.data)
+      map((response: CardResponse) => {
+        this.totalCount = response.totalCount;
+        return response.data
+      })
     );
   }
 }

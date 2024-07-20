@@ -1,6 +1,9 @@
 <mat-toolbar>
   <app-header />
 </mat-toolbar>
+<div *ngIf="loading$ | async" class="loading-overlay">
+  <mat-progress-spinner mode="indeterminate" />
+</div>
 <div class="content">
   <router-outlet />
 </div>
