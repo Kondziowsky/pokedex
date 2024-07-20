@@ -7,14 +7,14 @@ import {CardResponse} from "@shared/models/pokemon.model";
   providedIn: 'root'
 })
 export class PokemonService {
-  private http = inject(HttpClient);
-  private apiUrl = 'https://api.pokemontcg.io/v2/cards';
+  private _http = inject(HttpClient);
+  private _apiUrl = 'https://api.pokemontcg.io/v2/cards';
 
    getAllCards(page: number, pageSize: number): Observable<CardResponse> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
 
-    return this.http.get<CardResponse>(this.apiUrl, { params });
+    return this._http.get<CardResponse>(this._apiUrl, { params });
   }
 }
