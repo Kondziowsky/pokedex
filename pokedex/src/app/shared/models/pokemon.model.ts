@@ -1,4 +1,8 @@
 export interface CardResponse {
+ data: Card;
+}
+
+export interface CardWithPaginationResponse {
   count: number;
   data: Card[];
   page: number;

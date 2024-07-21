@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {PokemonService} from "@core/services/pokemon.service";
-import {Card, CardResponse, PokemonFilters} from "@shared/models/pokemon.model";
+import {Card, CardWithPaginationResponse, PokemonFilters} from "@shared/models/pokemon.model";
 import {map, Observable} from "rxjs";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {PokemonCardComponent} from "@shared/components/pokemon-card/pokemon-card.component";
@@ -48,7 +48,7 @@ export class PokemonListComponent implements OnInit {
 
   private loadCards(): void {
     this.cards$ = this._pokemonService.getCards(this.page, this.pageSize, this.filters).pipe(
-      map((response: CardResponse) => {
+      map((response: CardWithPaginationResponse) => {
         this.totalCount = response.totalCount;
         return response.data;
       })

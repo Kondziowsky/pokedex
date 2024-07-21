@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Card, CardResponse, PokemonFilters, PokemonTypesResponse} from "@shared/models/pokemon.model";
+import {Card, CardResponse, CardWithPaginationResponse, PokemonFilters, PokemonTypesResponse} from "@shared/models/pokemon.model";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PokemonService {
     return `${this._baseUrl}/${endpoint}`;
   }
 
-  getCards(page: number, pageSize: number, filters: PokemonFilters): Observable<CardResponse> {
+  getCards(page: number, pageSize: number, filters: PokemonFilters): Observable<CardWithPaginationResponse> {
     let query = '';
     if (filters.selectedSubtype) query += ` subtypes:${filters.selectedSubtype}`;
     if (filters.selectedType) query += ` types:${filters.selectedType}`;
@@ -26,11 +26,13 @@ export class PokemonService {
       .set('page', page.toString())
       .set('pageSize', pageSize.toString())
       .set('orderBy', 'name');
-    return this._http.get<CardResponse>(this._getEndpointUrl('cards'), { params });
+    return this._http.get<CardWithPaginationResponse>(this._getEndpointUrl('cards'), { params });
   }
 
   getCardDetails(id: string): Observable<Card> {
-    return this._http.get<Card>(this._getEndpointUrl(`cards/${id}`));
+    return this._http.get<CardResponse>(this._getEndpointUrl(`cards/${id}`)).pipe(
+      map( (res: CardResponse) => res.data)
+    );
   }
 
   getAllTypes(): Observable<PokemonTypesResponse> {

@@ -1,0 +1,8 @@
+<div class="pokemon-details">
+  <ng-container *ngIf="card$ | async as card; else loading">
+    <img mat-card-image [ngSrc]="card.images.small" [alt]="card.name" [height]="342" [width]="245" priority>
+  </ng-container>
+  <ng-template #loading>
+    <p class="pokemon-details__loading">Loading...</p>
+  </ng-template>
+</div>
