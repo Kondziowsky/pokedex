@@ -10,4 +10,12 @@
   &__paginator {
     align-self: center;
   }
+
+  &__no-results {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    margin: 12px 0;
+    color: #888;
+  }
 }
