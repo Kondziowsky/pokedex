@@ -1,7 +1,11 @@
 <div class="list-container">
+  <app-pokemon-filters (filterChange)="onFilterChange($event)" />
+
   <div class="list-container__content" *ngIf="cards$ | async as cards">
     <div *ngFor="let card of cards">
-      <app-pokemon-card [card]="card" />
+      <a [routerLink]="['/pokemon-details', card.id]">
+        <app-pokemon-card [card]="card" />
+      </a>
     </div>
   </div>
   <mat-paginator

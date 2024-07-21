@@ -1,0 +1,44 @@
+<div class="pokemon-filters">
+
+  <mat-form-field>
+    <mat-label>Pokemon Name</mat-label>
+    <input matInput [(ngModel)]="filters.pokemonName">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Choose type</mat-label>
+    <mat-select [(value)]="filters.selectedType">
+      <mat-option>all</mat-option>
+      @for (type of types$ | async; track type) {
+        <mat-option [value]="type">{{type}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Choose subtype</mat-label>
+    <mat-select [(value)]="filters.selectedSubtype">
+      <mat-option>all</mat-option>
+      @for (subtype of subtypes$ | async; track subtype) {
+        <mat-option [value]="subtype">{{subtype}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Choose supertype</mat-label>
+    <mat-select [(value)]="filters.selectedSupertype">
+      <mat-option>all</mat-option>
+      @for (supertype of supertypes$ | async; track supertype) {
+        <mat-option [value]="supertype">{{supertype}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div>
+    <button mat-button (click)="clearFilters()">Clear filters</button>
+    <button mat-flat-button (click)="applyFilter()">Search</button>
+  </div>
+
+
+</div>

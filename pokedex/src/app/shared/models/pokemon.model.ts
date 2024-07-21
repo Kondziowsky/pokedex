@@ -122,3 +122,14 @@ export interface ICardmarket {
     reverseHoloTrend: number;
   };
 }
+
+export interface PokemonTypesResponse {
+  data: string[];
+}
+
+export interface PokemonFilters {
+  pokemonName: string | null;
+  selectedType: string | null;
+  selectedSubtype: string | null;
+  selectedSupertype: string | null;
+}
