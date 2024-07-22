@@ -1,6 +1,14 @@
 <div class="list-container">
   <app-pokemon-filters (filterChange)="onFilterChange($event)" />
-  <app-pokemon-cards  *ngIf="cards$ | async as cards" [cards]="cards" />
+
+  @defer {
+    <app-pokemon-cards  *ngIf="cards$ | async as cards" [cards]="cards" />
+  } @loading (after 100ms; minimum 1s) {
+    <h1>loading...</h1>
+  } @error {
+    error
+  }
+
   <mat-paginator
     class="list-container__paginator"
     [length]="totalCount"
