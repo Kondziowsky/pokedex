@@ -1,3 +1,5 @@
+@import 'mixins';
+
 :host {
   height: 100%;
   width: 100%;
@@ -5,9 +7,7 @@
 
 .header {
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center;
 
   &__link-container {
     display: flex;
