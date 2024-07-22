@@ -89,7 +89,13 @@
             "polyfills": [
               "zone.js",
               "zone.js/testing"
+
             ],
+             "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/shared/styles"
+              ]
+            },
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
