@@ -8,6 +8,8 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {RouterLink} from "@angular/router";
 import {MatFormField, MatLabel, MatOption, MatSelect} from "@angular/material/select";
 import {PokemonFiltersComponent} from "@shared/components/pokemon-filters/pokemon-filters.component";
+import {PokemonFiltersService} from "@shared/services/pokemon-filters.service";
+import {PokemonCardsComponent} from "@shared/components/pokemon-cards/pokemon-cards.component";
 
 @Component({
   selector: 'app-pokemon-list',
@@ -23,31 +25,29 @@ import {PokemonFiltersComponent} from "@shared/components/pokemon-filters/pokemo
     MatOption,
     MatLabel,
     MatFormField,
-    PokemonFiltersComponent
+    PokemonFiltersComponent,
+    PokemonCardsComponent
   ],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss'
 })
 export class PokemonListComponent implements OnInit {
-  private _pokemonService = inject(PokemonService);
+  private _pokemonApiService = inject(PokemonService);
+  private _pokemonFiltersService = inject(PokemonFiltersService);
 
   cards$!: Observable<Card[]>;
   page = 1;
   pageSize = 20;
   totalCount = 0;
-  filters: PokemonFilters = {
-    pokemonName: null,
-    selectedType: null,
-    selectedSubtype: null,
-    selectedSupertype: null
-  };
 
   ngOnInit(): void {
+    this._pokemonFiltersService.setFiltersFromLocalStorage();
     this.loadCards();
   }
 
   private loadCards(): void {
-    this.cards$ = this._pokemonService.getCards(this.page, this.pageSize, this.filters).pipe(
+  this._pokemonFiltersService.saveFiltersToLocalStorage();
+    this.cards$ = this._pokemonApiService.getCards(this.page, this.pageSize).pipe(
       map((response: CardWithPaginationResponse) => {
         this.totalCount = response.totalCount;
         return response.data;
@@ -62,7 +62,7 @@ export class PokemonListComponent implements OnInit {
   }
 
   onFilterChange(filter: PokemonFilters): void {
-    this.filters = filter;
+    this._pokemonFiltersService.updateFilters(filter);
     this.page = 1;
     this.loadCards();
   }

@@ -4,10 +4,12 @@ import {MatLabel, MatOption, MatSelect} from "@angular/material/select";
 import {MatButton} from "@angular/material/button";
 import {PokemonService} from "@core/services/pokemon.service";
 import {AsyncPipe} from "@angular/common";
-import {PokemonFilters, PokemonTypesResponse} from "@shared/models/pokemon.model";
+import {PokemonFilters} from "@shared/models/pokemon.model";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
-import {catchError, map, Observable, of} from "rxjs";
+import {Observable} from "rxjs";
+import {EnterTriggerDirective} from "@shared/directives/enter-trigger.directive";
+import {PokemonFiltersService} from "@shared/services/pokemon-filters.service";
 
 @Component({
   selector: 'app-pokemon-filters',
@@ -20,7 +22,8 @@ import {catchError, map, Observable, of} from "rxjs";
     MatLabel,
     FormsModule,
     MatInput,
-    AsyncPipe
+    AsyncPipe,
+    EnterTriggerDirective
   ],
   templateUrl: './pokemon-filters.component.html',
   styleUrl: './pokemon-filters.component.scss'
@@ -29,44 +32,22 @@ export class PokemonFiltersComponent implements OnInit {
   @Output() filterChange = new EventEmitter<PokemonFilters>();
 
   private _pokemonService = inject(PokemonService);
+  private _pokemonFiltersService = inject(PokemonFiltersService);
 
   types$!: Observable<string[]>;
   subtypes$!: Observable<string[]>;
   supertypes$!: Observable<string[]>;
 
-  filters: PokemonFilters = {
-    pokemonName: null,
-    selectedType: null,
-    selectedSubtype: null,
-    selectedSupertype: null
-  };
+  filters = this._pokemonFiltersService.filters;
 
   ngOnInit(): void {
     this.loadSelects();
   }
 
   private loadSelects(): void {
-    this.types$ = this._pokemonService.getAllTypes().pipe(
-      map((response: PokemonTypesResponse) => response.data),
-      catchError((error) => {
-        console.error('Error fetching supertypes:', error);
-        return of([]);
-      })
-    );
-    this.subtypes$ = this._pokemonService.getAllSubtypes().pipe(
-      map((response: PokemonTypesResponse) => response.data),
-      catchError((error) => {
-        console.error('Error fetching supertypes:', error);
-        return of([]);
-      })
-    );
-    this.supertypes$ = this._pokemonService.getAllSupertypes().pipe(
-      map((response: PokemonTypesResponse) => response.data),
-      catchError((error) => {
-        console.error('Error fetching supertypes:', error);
-        return of([]);
-      })
-    );
+    this.types$ = this._pokemonService.getTypes();
+    this.subtypes$ = this._pokemonService.getSubtypes();
+    this.supertypes$ = this._pokemonService.getSupertypes();
   }
 
   applyFilter(): void {
@@ -74,11 +55,6 @@ export class PokemonFiltersComponent implements OnInit {
   }
 
   clearFilters(): void {
-    this.filters = {
-      pokemonName: null,
-      selectedType: null,
-      selectedSubtype: null,
-      selectedSupertype: null
-    };
+    this._pokemonFiltersService.resetFilters();
   }
 }

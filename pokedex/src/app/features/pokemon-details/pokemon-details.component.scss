@@ -1,3 +1,40 @@
-.pokemon-details {
+@import 'mixins';
 
+.pokemon-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+
+  &__image {
+    align-self: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+
+    @include min-width(xs) {
+      gap: 12px;
+      flex-wrap: nowrap;
+    }
+  }
+
+  &__card {
+    &-header {
+      margin-bottom: 12px;
+      color: $primary-color;
+    }
+
+    &-content {
+      display: flex;
+      flex-wrap: wrap;
+
+      @include min-width(xs) {
+        gap: 12px;
+      }
+    }
+  }
 }

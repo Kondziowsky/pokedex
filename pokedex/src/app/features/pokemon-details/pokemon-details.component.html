@@ -1,8 +1,87 @@
 <div class="pokemon-details">
-  <ng-container *ngIf="card$ | async as card; else loading">
-    <img mat-card-image [ngSrc]="card.images.small" [alt]="card.name" [height]="342" [width]="245" priority>
+  <ng-container *ngIf="card; else loading">
+    <img class="pokemon-details__image" mat-card-image [ngSrc]="card.images.small" [alt]="card.name" [height]="342" [width]="245" priority>
   </ng-container>
   <ng-template #loading>
     <p class="pokemon-details__loading">Loading...</p>
   </ng-template>
+  <form class="pokemon-details__form" [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
+    <mat-card class="pokemon-details__card" appearance="outlined">
+      <mat-card-header class="pokemon-details__card-header">Basic informations</mat-card-header>
+      <mat-card-content class="pokemon-details__card-content">
+        <mat-form-field>
+          <mat-label>Pokemon Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Artist</mat-label>
+          <input matInput formControlName="artist">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Supertype</mat-label>
+          <mat-select formControlName="supertype">
+            <mat-option value="">all</mat-option>
+            @for (supertype of supertypes$ | async; track supertype) {
+              <mat-option [value]="supertype">{{supertype}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Subtypes</mat-label>
+          <mat-select formControlName="subtypes" multiple>
+            @for (subtype of subtypes$ | async; track subtype) {
+              <mat-option [value]="subtype">{{subtype}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Types</mat-label>
+          <mat-select formControlName="types" multiple>
+            @for (type of types$ | async; track type) {
+              <mat-option [value]="type">{{type}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="pokemon-details__card" appearance="outlined">
+      <mat-card-header class="pokemon-details__card-header">Stats</mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>HP</mat-label>
+          <input matInput formControlName="hp">
+          @if (hpControl.invalid) {
+            <mat-error>Must be a number</mat-error>
+          }
+        </mat-form-field>
+
+        <div formArrayName="resistances">
+          <p>Resistances</p>
+          <div *ngFor="let resistance of resistances.controls; let i = index" [formGroupName]="i">
+            <mat-form-field>
+              <mat-label>Type</mat-label>
+              <input matInput formControlName="type">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Value</mat-label>
+              <input matInput formControlName="value" type="number">
+            </mat-form-field>
+            <button mat-button type="button" (click)="removeResistance(i)">Remove</button>
+          </div>
+        </div>
+        <button mat-button type="button" (click)="addResistance()">Add Resistance</button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+
+  <mat-card class="pokemon-details__card" appearance="outlined">
+    <mat-card-header class="pokemon-details__card-header">Explore more</mat-card-header>
+    <mat-card-content>
+      <app-pokemon-cards  *ngIf="similarPokemons" [cards]="similarPokemons" />
+    </mat-card-content>
+  </mat-card>
 </div>

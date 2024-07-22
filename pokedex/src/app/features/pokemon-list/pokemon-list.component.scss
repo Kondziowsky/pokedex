@@ -5,24 +5,7 @@
   flex-direction: column;
   height: 100vh;
 
-  &__content {
-    @include min-width(xs) {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 12px;
-    }
-  }
-
   &__paginator {
     align-self: center;
-  }
-
-  &__no-results {
-    align-self: center;
-    font-size: 16px;
-    font-weight: 600;
-    margin: 12px 0;
-    color: #888;
   }
 }

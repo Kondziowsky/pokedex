@@ -2,12 +2,15 @@ export interface CardResponse {
  data: Card;
 }
 
-export interface CardWithPaginationResponse {
+export interface Pagination {
   count: number;
-  data: Card[];
   page: number;
   pageSize: number;
   totalCount: number;
+}
+
+export interface CardWithPaginationResponse extends Pagination {
+  data: Card[];
 }
 
 export interface Card {
@@ -16,7 +19,7 @@ export interface Card {
   supertype: string;
   subtypes: string[];
   hp?: string;
-  types?: string[];
+  types: string[];
   evolvesFrom?: string;
   evolvesTo?: string[];
   rules?: string[];
@@ -136,4 +139,6 @@ export interface PokemonFilters {
   selectedType: string | null;
   selectedSubtype: string | null;
   selectedSupertype: string | null;
+  setId: string | null;
 }
+

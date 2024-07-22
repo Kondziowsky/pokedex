@@ -1,7 +1,7 @@
 <div class="pokemon-filters">
   <mat-form-field>
     <mat-label>Pokemon Name</mat-label>
-    <input matInput [(ngModel)]="filters.pokemonName">
+    <input enterTrigger [filterFunction]="applyFilter.bind(this)" matInput [(ngModel)]="filters.pokemonName">
   </mat-form-field>
 
   <mat-form-field>
@@ -34,7 +34,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div>
+  <div class="pokemon-filters__buttons">
     <button mat-button (click)="clearFilters()">Clear filters</button>
     <button mat-flat-button (click)="applyFilter()">Search</button>
   </div>

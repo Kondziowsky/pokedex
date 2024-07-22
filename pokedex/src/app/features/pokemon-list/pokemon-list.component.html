@@ -1,15 +1,15 @@
 <div class="list-container">
   <app-pokemon-filters (filterChange)="onFilterChange($event)" />
-
-  <div class="list-container__content" *ngIf="cards$ | async as cards; else noResults">
-    <ng-container *ngIf="cards.length > 0; else noResults">
-      <div *ngFor="let card of cards">
-        <a [routerLink]="['/pokemon-details', card.id]">
-          <app-pokemon-card [card]="card"></app-pokemon-card>
-        </a>
-      </div>
-    </ng-container>
-  </div>
+  <app-pokemon-cards  *ngIf="cards$ | async as cards" [cards]="cards" />
+<!--  <div class="list-container__content" *ngIf="cards$ | async as cards; else noResults">-->
+<!--    <ng-container *ngIf="cards.length > 0; else noResults">-->
+<!--      <div *ngFor="let card of cards">-->
+<!--        <a [routerLink]="['/pokemon-details', card.id]">-->
+<!--          <app-pokemon-card [card]="card"></app-pokemon-card>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--  </div>-->
   <mat-paginator
     class="list-container__paginator"
     [length]="totalCount"
@@ -19,6 +19,6 @@
   </mat-paginator>
 </div>
 
-<ng-template #noResults>
-  <p class="list-container__no-results">No Pokemon found.</p>
-</ng-template>
+<!--<ng-template #noResults>-->
+<!--  <p class="list-container__no-results">No Pokemon found.</p>-->
+<!--</ng-template>-->
