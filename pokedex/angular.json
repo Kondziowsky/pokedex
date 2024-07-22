@@ -91,7 +91,7 @@
               "zone.js/testing"
 
             ],
-             "stylePreprocessorOptions": {
+            "stylePreprocessorOptions": {
               "includePaths": [
                 "src/app/shared/styles"
               ]

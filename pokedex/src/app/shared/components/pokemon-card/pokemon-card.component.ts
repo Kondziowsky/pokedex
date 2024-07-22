@@ -5,7 +5,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {NgOptimizedImage} from "@angular/common";
 
 @Component({
-  selector: 'app-pokemon-card',
+  selector: 'app-pokemon-card.json',
   standalone: true,
   imports: [
     MatCardModule,
