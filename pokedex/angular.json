@@ -37,7 +37,12 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "sourceMap": false
+            "sourceMap": false,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/shared/styles"
+              ]
+            }
           },
           "configurations": {
             "production": {
