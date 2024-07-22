@@ -1,0 +1,13 @@
+<div class="pokemon-cards">
+  <ng-container *ngIf="cards.length > 0; else noResults">
+    <div *ngFor="let card of cards">
+      <a [routerLink]="['/pokemon-details', card.id]">
+        <app-pokemon-card [card]="card"></app-pokemon-card>
+      </a>
+    </div>
+  </ng-container>
+
+  <ng-template #noResults>
+    <p class="pokemon-cards__no-results">No Pokemon found.</p>
+  </ng-template>
+</div>
