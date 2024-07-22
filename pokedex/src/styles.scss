@@ -1,21 +1,17 @@
-@import 'app/shared/styles/main';
+@import 'main';
 
 body {
+  display: flex;
+  flex-direction: column;
+  font-family: $font-family;
+  color: $font-color;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  min-height: 100vh;
 }
 
 html, body {
   height: 100%;
   margin: 0;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
-  font-family: Roboto,
-  "Helvetica Neue", sans-serif;
 }

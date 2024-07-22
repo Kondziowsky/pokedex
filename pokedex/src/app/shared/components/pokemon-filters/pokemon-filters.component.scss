@@ -1,5 +1,16 @@
+@import 'mixins';
+
 .pokemon-filters {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
+  @include min-width(xs) {
+    gap: 16px;
+  }
+
+  &__buttons {
+    align-self: center;
+  }
+
 }

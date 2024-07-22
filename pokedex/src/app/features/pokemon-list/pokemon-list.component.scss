@@ -1,10 +1,17 @@
+@import 'mixins';
+
 .list-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
 
   &__content {
-    flex: 1;
+    @include min-width(xs) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 12px;
+    }
   }
 
   &__paginator {
@@ -12,9 +19,9 @@
   }
 
   &__no-results {
+    align-self: center;
     font-size: 16px;
     font-weight: 600;
-    text-align: center;
     margin: 12px 0;
     color: #888;
   }

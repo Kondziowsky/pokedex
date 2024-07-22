@@ -1,6 +1,5 @@
-// Define reusable mixins
-
 @import 'variables';
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -11,7 +10,7 @@
   box-shadow: 0 2px 4px $color;
 }
 
-@mixin respond-to($breakpoint) {
+@mixin min-width($breakpoint) {
   @if $breakpoint == xs {
     @media (min-width: $breakpoint-xs) { @content; }
   } @else if $breakpoint == sm {

@@ -1,13 +1,8 @@
-body {
-  font-family: $font-family;
-  color: $font-color;
-}
-
 h1, h2, h3, h4, h5, h6 {
   color: $primary-color;
 }
 
-@include respond-to(xs) {
+@include min-width(xs) {
   body {
     font-size: 14px;
   }
@@ -17,7 +12,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-@include respond-to(sm) {
+@include min-width(sm) {
   body {
     font-size: 16px;
   }
@@ -27,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-@include respond-to(md) {
+@include min-width(md) {
   body {
     font-size: 18px;
   }
@@ -37,7 +32,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-@include respond-to(lg) {
+@include min-width(lg) {
   body {
     font-size: 20px;
   }
