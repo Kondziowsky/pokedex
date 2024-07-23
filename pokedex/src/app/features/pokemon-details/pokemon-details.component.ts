@@ -66,7 +66,6 @@ export class PokemonDetailsComponent implements OnInit {
       this._loadDataForSelects();
       this._initForm();
       this._getCardDetails(id);
-      this._observeFormChanges();
   }
 
   private _loadDataForSelects(): void {
@@ -131,12 +130,6 @@ export class PokemonDetailsComponent implements OnInit {
       evolvesTo: data.evolvesTo,
       hp: data.hp
     });
-  }
-
-  private _observeFormChanges(): void {
-    this.pokemonForm.valueChanges.pipe(
-      takeUntilDestroyed(this._destroyRef)
-    ).subscribe( (formValue) => console.log('form changed: ', formValue));
   }
 
   private createResistanceFormGroup(): FormGroup {
