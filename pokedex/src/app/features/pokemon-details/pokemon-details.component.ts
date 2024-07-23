@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {Card} from "@shared/models/pokemon.model";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, ParamMap} from "@angular/router";
 import {PokemonService} from "@core/services/pokemon.service";
 import {MatCard, MatCardContent, MatCardHeader, MatCardImage} from "@angular/material/card";
 import {AsyncPipe, JsonPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
@@ -49,27 +49,24 @@ export class PokemonDetailsComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
 
   card!: Card;
-  similarPokemons!: Card[];
+  similarPokemonCards!: Card[];
   pokemonForm!: FormGroup;
 
   supertypes$!: Observable<string[]>;
   subtypes$!: Observable<string[]>;
   types$!: Observable<string[]>;
 
-  // TODO -> split the code here in more elegant way
   ngOnInit(): void {
     this._route.paramMap.pipe(
       takeUntilDestroyed(this._destroyRef)
-    ).subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this._loadDataForSelects();
-        this._initForm();
-        this._getCardDetails(id);
-        this._observeFormChanges();
-      }
-    });
+    ).subscribe((params: ParamMap) => this._initPokemonDetails(params.get('id') || 'none'));
+  }
 
+  private _initPokemonDetails(id: string): void {
+      this._loadDataForSelects();
+      this._initForm();
+      this._getCardDetails(id);
+      this._observeFormChanges();
   }
 
   private _loadDataForSelects(): void {
@@ -109,8 +106,7 @@ export class PokemonDetailsComponent implements OnInit {
         takeUntilDestroyed(this._destroyRef)
       ).subscribe( (res) => {
         if (!res) return;
-        console.log(res.data);
-        this.similarPokemons = res.data;
+        this.similarPokemonCards = res.data;
       });
     }
   }
