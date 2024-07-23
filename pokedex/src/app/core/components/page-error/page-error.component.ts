@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatAnchor, MatButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 
@@ -11,7 +11,8 @@ import {RouterLink} from "@angular/router";
       MatAnchor
     ],
   templateUrl: './page-error.component.html',
-  styleUrl: './page-error.component.scss'
+  styleUrl: './page-error.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageErrorComponent {
 

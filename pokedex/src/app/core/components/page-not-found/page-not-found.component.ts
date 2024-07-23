@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatAnchor, MatButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 
@@ -11,7 +11,8 @@ import {RouterLink} from "@angular/router";
     MatAnchor
   ],
   templateUrl: './page-not-found.component.html',
-  styleUrl: './page-not-found.component.scss'
+  styleUrl: './page-not-found.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageNotFoundComponent {
     /* TODO -> handle with page not found */
