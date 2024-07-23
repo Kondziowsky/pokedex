@@ -8,8 +8,8 @@ import {authInterceptor} from "@core/interceptors/auth.interceptor";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withInMemoryScrolling({scrollPositionRestoration: "top"})),
     provideZoneChangeDetection(),
+    provideRouter(routes, withInMemoryScrolling({scrollPositionRestoration: "top"})),
     provideHttpClient(
       withInterceptors([authInterceptor, loadingInterceptor])
     ),
