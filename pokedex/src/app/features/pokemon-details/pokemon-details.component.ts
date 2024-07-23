@@ -6,7 +6,7 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardImage} from "@angular/mat
 import {AsyncPipe, JsonPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {Observable, of, switchMap, tap} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/core";
 import {MatSelect} from "@angular/material/select";
@@ -45,7 +45,7 @@ import {PokemonCardsComponent} from "@shared/components/pokemon-cards/pokemon-ca
 export class PokemonDetailsComponent implements OnInit {
   private _route = inject(ActivatedRoute);
   private _pokemonService = inject(PokemonService);
-  private destroyRef = inject(DestroyRef);
+  private _destroyRef = inject(DestroyRef);
   private _formBuilder = inject(FormBuilder);
 
   card!: Card;
@@ -56,11 +56,20 @@ export class PokemonDetailsComponent implements OnInit {
   subtypes$!: Observable<string[]>;
   types$!: Observable<string[]>;
 
+  // TODO -> split the code here in more elegant way
   ngOnInit(): void {
-    this._loadDataForSelects();
-    this._initForm();
-    this._getCardDetails();
-    this._observeFormChanges();
+    this._route.paramMap.pipe(
+      takeUntilDestroyed(this._destroyRef)
+    ).subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this._loadDataForSelects();
+        this._initForm();
+        this._getCardDetails(id);
+        this._observeFormChanges();
+      }
+    });
+
   }
 
   private _loadDataForSelects(): void {
@@ -83,8 +92,7 @@ export class PokemonDetailsComponent implements OnInit {
     })
   }
 
-  private _getCardDetails(): void {
-    const id = this._route.snapshot.paramMap.get('id');
+  private _getCardDetails(id: string): void {
     if (id) {
       this._pokemonService.getCardDetails(id).pipe(
         tap(card => {
@@ -98,7 +106,7 @@ export class PokemonDetailsComponent implements OnInit {
             return of(null);
           }
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this._destroyRef)
       ).subscribe( (res) => {
         if (!res) return;
         console.log(res.data);
@@ -130,7 +138,9 @@ export class PokemonDetailsComponent implements OnInit {
   }
 
   private _observeFormChanges(): void {
-    this.pokemonForm.valueChanges.subscribe( (formValue) => console.log('form changed: ', formValue));
+    this.pokemonForm.valueChanges.pipe(
+      takeUntilDestroyed(this._destroyRef)
+    ).subscribe( (formValue) => console.log('form changed: ', formValue));
   }
 
   private createResistanceFormGroup(): FormGroup {
@@ -156,8 +166,11 @@ export class PokemonDetailsComponent implements OnInit {
     this.resistances.removeAt(index);
   }
 
+  trackByFn(index: number, item: AbstractControl) {
+    return index;
+  }
+
   onSubmit(): void {
     console.log(this.pokemonForm.value);
   }
-
 }

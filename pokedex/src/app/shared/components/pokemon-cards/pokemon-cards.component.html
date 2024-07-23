@@ -1,6 +1,6 @@
 <div class="pokemon-cards">
   <ng-container *ngIf="cards.length > 0; else noResults">
-    <div *ngFor="let card of cards">
+    <div *ngFor="let card of cards; trackBy: trackByFn">
       <a [routerLink]="['/pokemon-details', card.id]">
         <app-pokemon-card [card]="card"></app-pokemon-card>
       </a>
