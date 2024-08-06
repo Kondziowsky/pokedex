@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection(),
     provideRouter(routes, withInMemoryScrolling({scrollPositionRestoration: "top"})),
     provideHttpClient(
-      withInterceptors([authInterceptor, loadingInterceptor])
+      // withInterceptors([loadingInterceptor])
     ),
     provideAnimations()
   ]

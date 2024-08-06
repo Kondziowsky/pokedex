@@ -1,0 +1,7 @@
+    @defer {
+    <pre *ngIf="btcUsdt | async as cards">{{ cards | json }}</pre>
+  } @loading (after 100ms; minimum 1s) {
+    <h1>loading...</h1>
+  } @error {
+    error
+  }
